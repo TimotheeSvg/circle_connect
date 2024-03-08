@@ -1,9 +1,6 @@
 package fr.esgi.circle_connect.business;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.*;
@@ -14,7 +11,8 @@ public class Video {
     }
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="video_seq")
+    @SequenceGenerator(name="video_seq", initialValue = 1)
     public Long id;
 
     @Column(nullable = false)

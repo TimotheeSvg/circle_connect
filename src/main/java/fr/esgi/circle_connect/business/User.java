@@ -3,15 +3,13 @@ package fr.esgi.circle_connect.business;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import fr.esgi.circle_connect.business.Room;
-import java.util.List;
 
 @Entity
 @RequiredArgsConstructor
 @Data
+@Table(name="users")
 public class User {
 
     @Id
@@ -19,7 +17,7 @@ public class User {
     @SequenceGenerator(name="user_seq", initialValue = 1)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(unique=true, nullable = false, updatable=true)
     @NotBlank(message="Merci de préciser l'email")
     private String email;
 
@@ -35,5 +33,13 @@ public class User {
     @NotBlank(message="Merci de préciser le mot de passe")
     @Length(min=8, message="Le mot de passe doit contenir au moins {min} caractères")
     private String password;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User user = (User) obj;
+        return id.equals(user.id);
+    }
 
 }
